@@ -1,0 +1,10 @@
+node_modules/
+dist/
+coverage/
+.astro/
+.env.*
+.DS_Store
+.obsidian
+.dccache
+
+packages/docs/diagrams/*.svg

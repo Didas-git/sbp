@@ -1,0 +1,29 @@
+{
+  "private": true,
+  "author": "DidaS",
+  "license": "Apache-2.0",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Didas-git/sbp"
+  },
+  "homepage": "https://github.com/Didas-git/sbp#readme",
+  "bugs": {
+    "url": "https://github.com/Didas-git/sbp/issues"
+  },
+  "files": [
+    "./dist"
+  ],
+  "scripts": {
+    "check": "eslint .",
+    "build": "rm -rf dist && tsc && cp .npmignore dist/"
+  },
+  "devDependencies": {
+    "@stylistic/eslint-plugin": "^1.7.0",
+    "bun-types": "1.1.3",
+    "eslint": "^9.0.0",
+    "eslint-plugin-jsdoc": "^48.2.3",
+    "typescript": "^5.4.4",
+    "typescript-eslint": "^7.5.0"
+  }
+}
