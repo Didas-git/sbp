@@ -61,7 +61,7 @@ Currently the spec only has 2 structure types:
 |   `i32`   | `int32`, `int`                              |         `0x33`          | [Integer](https://en.wikipedia.org/wiki/Integer_(computer_science)#Common_integral_data_types)                     |
 |   `i64`   | `int64`, `long`                             |         `0x34`          | [Integer](https://en.wikipedia.org/wiki/Integer_(computer_science)#Common_integral_data_types)                     |
 |  `i128`   | `int128`, `cent`                            |         `0x35`          | [Integer](https://en.wikipedia.org/wiki/Integer_(computer_science)#Common_integral_data_types) (Encoded as string) |
-| `char(n)` | `character(n)`                              |         `0x40`          | [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoded string of length `n` (max: `$2^{64}$ − 1`)                    |
+| `char(n)` | `character(n)`                              |         `0x40`          | [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoded string of length `n` (max: $2^{64} − 1$)                      |
 |   `str`   | `string`                                    |         `0x41`          | [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoded string of variable length                                     |
 |  `bint`   | `bigint`                                    |         `0x70`          |                                                                                                                    |
 |  `buint`  | `biguint`                                   |         `0x71`          |                                                                                                                    |
@@ -82,4 +82,4 @@ Currently structures are defined in json.
 > [!IMPORTANT]
 > Formal definition coming soon...
 
-To see the current schema check out the [typescript types](./js/src/schema-definition.ts).
+To see the current definition check out the [typescript types](./js/src/schema-definition.ts).
