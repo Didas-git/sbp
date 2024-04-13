@@ -18,17 +18,27 @@ export function decodeToJSON(data: ArrayBuffer, isTCP: boolean = false): { versi
     const data_type: ProtocolType = dv.getUint8(isTCP ? 3 : 1);
 
     switch (data_type) {
-        case ProtocolType.NULL: {
-            break;
-        }
-        case ProtocolType.BOOL: {
-            return { version, type: "bool", payload: dv.getUint8(2) === 1 };
-        }
-        case ProtocolType.F64: {
-            return { version, type: "f64", payload: dv.getFloat64(2, true) };
-        }
-        case ProtocolType.I64: {
-            return { version, type: "i64", payload: dv.getBigInt64(2, true) };
+        case ProtocolType.NULL: { return { version, type: "null", payload: null }; }
+        case ProtocolType.BOOL: { return { version, type: "bool", payload: dv.getUint8(2) === 1 }; }
+        case ProtocolType.F16: { throw new Error("Float16 is not yet possible to decode in the javascript implementation"); }
+        case ProtocolType.F32: { return { version, type: "f32", payload: dv.getFloat32(2, true) }; }
+        case ProtocolType.F64: { return { version, type: "f64", payload: dv.getFloat64(2, true) }; }
+        case ProtocolType.U8: { return { version, type: "u8", payload: dv.getUint8(2) }; }
+        case ProtocolType.U16: { return { version, type: "u16", payload: dv.getUint16(2, true) }; }
+        case ProtocolType.U32: { return { version, type: "u32", payload: dv.getUint32(2, true) }; }
+        case ProtocolType.U64: { return { version, type: "u64", payload: dv.getBigUint64(2, true) }; }
+        case ProtocolType.U128: { return { version, type: "u128", payload: BigInt(`${dv.getBigUint64(2, true)}${dv.getBigUint64(10, true)}`) }; }
+        case ProtocolType.I8: { return { version, type: "i8", payload: dv.getInt8(2) }; }
+        case ProtocolType.I16: { return { version, type: "i16", payload: dv.getInt16(2, true) }; }
+        case ProtocolType.I32: { return { version, type: "i32", payload: dv.getInt32(2, true) }; }
+        case ProtocolType.I64: { return { version, type: "i64", payload: dv.getBigInt64(2, true) }; }
+        case ProtocolType.I128: { return { version, type: "i128", payload: BigInt(`${dv.getBigInt64(2, true)}${dv.getBigInt64(10, true)}`) }; }
+        case ProtocolType.CHAR: {
+            const payload: Array<string> = [];
+
+            for (let i = 2, length = data.byteLength; i < length; i++) payload.push(String.fromCharCode(dv.getUint8(i)));
+
+            return { version, type: "char", payload: payload.join("") };
         }
         case ProtocolType.STR: {
             const payload: Array<string> = [];
@@ -43,24 +53,21 @@ export function decodeToJSON(data: ArrayBuffer, isTCP: boolean = false): { versi
             for (let i = 2, length = data.byteLength; i < length; i++) str += String.fromCharCode(dv.getUint8(i));
             return { version, type: "bigint", payload: BigInt(str) };
         }
-        case ProtocolType.F16: { throw new Error("Not implemented yet: ProtocolType.F16 case"); }
-        case ProtocolType.F32: { throw new Error("Not implemented yet: ProtocolType.F32 case"); }
-        case ProtocolType.U8: { throw new Error("Not implemented yet: ProtocolType.U8 case"); }
-        case ProtocolType.U16: { throw new Error("Not implemented yet: ProtocolType.U16 case"); }
-        case ProtocolType.U32: { throw new Error("Not implemented yet: ProtocolType.U32 case"); }
-        case ProtocolType.U64: { throw new Error("Not implemented yet: ProtocolType.U64 case"); }
-        case ProtocolType.U128: { throw new Error("Not implemented yet: ProtocolType.U128 case"); }
-        case ProtocolType.I8: { throw new Error("Not implemented yet: ProtocolType.I8 case"); }
-        case ProtocolType.I16: { throw new Error("Not implemented yet: ProtocolType.I16 case"); }
-        case ProtocolType.I32: { throw new Error("Not implemented yet: ProtocolType.I32 case"); }
-        case ProtocolType.I128: { throw new Error("Not implemented yet: ProtocolType.I128 case"); }
-        case ProtocolType.CHAR: { throw new Error("Not implemented yet: ProtocolType.CHAR case"); }
-        case ProtocolType.BUINT: { throw new Error("Not implemented yet: ProtocolType.BUINT case"); }
-        case ProtocolType.DATE: { throw new Error("Not implemented yet: ProtocolType.DATE case"); }
-        case ProtocolType.TIME: { throw new Error("Not implemented yet: ProtocolType.TIME case"); }
-        case ProtocolType.M_TIME: { throw new Error("Not implemented yet: ProtocolType.M_TIME case"); }
-        case ProtocolType.N_TIME: { throw new Error("Not implemented yet: ProtocolType.N_TIME case"); }
-    }
+        case ProtocolType.BUINT: {
+            let str = "";
 
-    return { version, type: "null", payload: null };
+            for (let i = 2, length = data.byteLength; i < length; i++) str += String.fromCharCode(dv.getUint8(i));
+            return { version, type: "biguint", payload: BigInt(str) };
+        }
+        case ProtocolType.DATE: {
+            const payload: Array<string> = [];
+
+            for (let i = 2, length = data.byteLength; i < length; i++) payload.push(String.fromCharCode(dv.getUint8(i)));
+
+            return { version, type: "date", payload: new Date(payload.join("")) };
+        }
+        case ProtocolType.TIME: { return { version, type: "time", payload: dv.getBigInt64(2, true) }; }
+        case ProtocolType.M_TIME: { return { version, type: "mtime", payload: dv.getBigInt64(2, true) }; }
+        case ProtocolType.N_TIME: { return { version, type: "ntime", payload: BigInt(`${dv.getBigInt64(2, true)}${dv.getBigInt64(10, true)}`) }; }
+    }
 }
