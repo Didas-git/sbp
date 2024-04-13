@@ -39,7 +39,7 @@ Currently the spec only has 2 structure types:
 
 ## Data Types
 
-> NOTE
+> [!NOTE]
 > All numeric data types are arranged in LE.
 
 ### Basic Types
@@ -61,7 +61,7 @@ Currently the spec only has 2 structure types:
 |   `i32`   | `int32`, `int`                              |         `0x33`          | [Integer](https://en.wikipedia.org/wiki/Integer_(computer_science)#Common_integral_data_types)                     |
 |   `i64`   | `int64`, `long`                             |         `0x34`          | [Integer](https://en.wikipedia.org/wiki/Integer_(computer_science)#Common_integral_data_types)                     |
 |  `i128`   | `int128`, `cent`                            |         `0x35`          | [Integer](https://en.wikipedia.org/wiki/Integer_(computer_science)#Common_integral_data_types) (Encoded as string) |
-| `char(n)` | `character(n)`                              |         `0x40`          | [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoded string of length `n` (max: `2⁶⁴ − 1`)                         |
+| `char(n)` | `character(n)`                              |         `0x40`          | [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoded string of length `n` (max: `$2^{64}$ − 1`)                    |
 |   `str`   | `string`                                    |         `0x41`          | [UTF-8](https://en.wikipedia.org/wiki/UTF-8) encoded string of variable length                                     |
 |  `bint`   | `bigint`                                    |         `0x70`          |                                                                                                                    |
 |  `buint`  | `biguint`                                   |         `0x71`          |                                                                                                                    |
@@ -74,3 +74,12 @@ Currently the spec only has 2 structure types:
 | `time`  | `timestamp`      |         `0xA5`          | [Unix Time](https://en.wikipedia.org/wiki/Unix_time) in seconds (`i64`)      |
 | `mtime` | `ms_timestamp`   |         `0xA6`          | [Unix Time](https://en.wikipedia.org/wiki/Unix_time) in milliseconds (`i64`) |
 | `ntime` | `nano_timestamp` |         `0xA7`          | [Unix Time](https://en.wikipedia.org/wiki/Unix_time) in nanoseconds (`i128`) |
+
+## Structures
+
+Currently structures are defined in json.
+
+> [!IMPORTANT]
+> Formal definition coming soon...
+
+To see the current schema check out the [typescript types](./js/src/schema-definition.ts).
