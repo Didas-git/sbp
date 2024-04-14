@@ -23,6 +23,7 @@ export const enum SchemaType {
     INT = "int",
     CHAR = "char",
     STRING = "str",
+    DECIMAL = "dec",
     BIGINT = "bint",
     BIGUINT = "buint",
     //#endregion
@@ -47,7 +48,7 @@ export interface BooleanField extends BaseField {
 
 export interface FloatField extends BaseField {
     type: SchemaType.FLOAT;
-    size: 16 | 32 | 64;
+    size: 16 | 32 | 64 | 80 | 128;
 }
 
 export type IntegerSize = 8 | 16 | 32 | 64 | 128;
@@ -69,6 +70,11 @@ export interface CharField extends BaseField {
 
 export interface StringField extends BaseField {
     type: SchemaType.STRING;
+}
+
+export interface DecimalField extends BaseField {
+    type: SchemaType.DECIMAL;
+    size: 32 | 64 | 128;
 }
 
 export interface BigIntField extends BaseField {

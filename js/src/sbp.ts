@@ -23,6 +23,8 @@ export function decodeToJSON(data: ArrayBuffer, isTCP: boolean = false): { versi
         case ProtocolType.F16: { throw new Error("Float16 is not yet possible to decode in the javascript implementation"); }
         case ProtocolType.F32: { return { version, type: "f32", payload: dv.getFloat32(2, true) }; }
         case ProtocolType.F64: { return { version, type: "f64", payload: dv.getFloat64(2, true) }; }
+        case ProtocolType.F80: { throw new Error("Float80 is not yet possible to decode in the javascript implementation"); }
+        case ProtocolType.F128: { throw new Error("Float128 is not yet possible to decode in the javascript implementation"); }
         case ProtocolType.U8: { return { version, type: "u8", payload: dv.getUint8(2) }; }
         case ProtocolType.U16: { return { version, type: "u16", payload: dv.getUint16(2, true) }; }
         case ProtocolType.U32: { return { version, type: "u32", payload: dv.getUint32(2, true) }; }
@@ -47,6 +49,9 @@ export function decodeToJSON(data: ArrayBuffer, isTCP: boolean = false): { versi
 
             return { version, type: "str", payload: payload.join("") };
         }
+        case ProtocolType.D32: { throw new Error("Decimal32 is not yet possible to decode in the javascript implementation"); }
+        case ProtocolType.D64: { throw new Error("Decimal64 is not yet possible to decode in the javascript implementation"); }
+        case ProtocolType.D128: { throw new Error("Decimal128 is not yet possible to decode in the javascript implementation"); }
         case ProtocolType.BINT: {
             let str = "";
 
